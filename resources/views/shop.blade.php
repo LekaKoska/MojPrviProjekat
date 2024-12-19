@@ -4,12 +4,29 @@
 @endsection
 
 @section("pageSection")
+    @foreach($allProducts as $singleProduct)
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">{{$singleProduct->name}}</th>
+            <td>{{$singleProduct->description}}</td>
+            <td>{{$singleProduct->price}}</td>
+        </tr>
+
+        </tbody>
+    </table>
 
 
 
-        @foreach($allProducts as $singleProduct)
-            <p>Name: {{$singleProduct->name}}</p>
-            <p>Description: {{$singleProduct->description}}</p>
+
         @endforeach
 
 

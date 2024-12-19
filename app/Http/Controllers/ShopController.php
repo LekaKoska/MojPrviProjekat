@@ -16,7 +16,7 @@ class ShopController extends Controller
     }
     public function getAllProducts()
     {
-        $allProducts = ShopModel::all();
+        $allProducts = ShopModel::all(); // SELECT * FROM products
         return view("shop", compact('allProducts'));
     }
 }
