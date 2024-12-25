@@ -19,5 +19,34 @@ class ShopController extends Controller
         $allProducts = ShopModel::all(); // SELECT * FROM products
         return view("shop", compact('allProducts'));
     }
+    public function index()
+    {
+        return view("addProduct");
+    }
+    public function addProduct(Request $request)
+    {
+        $request->validate([
+           "name" => "required|string",
+           "description" => "required|string|min:6",
+           "amount" => "required|integer",
+           "price" => "required|integer",
+           "image" => "required|string"
+        ]);
+        ShopModel::create([
+           "name" => $request->get("name"),
+           "description" => $request->get("description"),
+           "amount" => $request->get("amount"),
+           "price" => $request->get("price"),
+           "image" => $request->get("image")
+        ]);
+        return redirect("/admin/products");
+    }
+
+    public function viewProducts()
+    {
+        $allProducts = ShopModel::all();
+
+        return view("adminProduct", compact("allProducts"));
+    }
 
 }

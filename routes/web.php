@@ -20,4 +20,12 @@ Route::get("/admin/all-contacts", [\App\Http\Controllers\contactController::clas
 
 Route::post("/send-contact",[\App\Http\Controllers\contactController::class, "sendContact"]);
 
+Route::get("/admin/add-product", [\App\Http\Controllers\ShopController::class, "index"]);
+
+Route::post("/admin/send-product", [\App\Http\Controllers\ShopController::class, "addProduct"]);
+
+Route::get("/admin/products", [\App\Http\Controllers\ShopController::class, "viewProducts"]);
+
+
+
 
