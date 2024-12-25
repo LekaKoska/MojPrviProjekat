@@ -19,4 +19,5 @@ class ShopController extends Controller
         $allProducts = ShopModel::all(); // SELECT * FROM products
         return view("shop", compact('allProducts'));
     }
+
 }

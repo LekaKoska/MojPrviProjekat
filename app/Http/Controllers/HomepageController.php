@@ -9,7 +9,7 @@ class HomepageController extends Controller
 {
     public function welcome()
     {
-        $products = ShopModel::orderby('price', 'desc')
+        $products = ShopModel::orderbyDesc('price',)
                                   ->take(6)
                                   ->get();
         return view("welcome", compact('products'));
