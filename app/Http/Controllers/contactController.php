@@ -34,4 +34,38 @@ class contactController extends Controller
 
         return redirect("/shop");
     }
+
+    public function delete($contacts)
+    {
+        $singleContact = ContactModel::where(['id' => $contacts])->first(); // Query for select all and LIMIT on 1
+
+        if($singleContact === null)
+        {
+            die("This contact doesn't exist!");
+        }
+
+        $singleContact->delete(); // Query for delete
+
+        return redirect()->back();
+
+    }
+    public function update(Request $request, ContactModel $singleContact)
+    {
+
+        return view("editContact", compact("singleContact"));
+    }
+
+    public function save(Request $request,ContactModel $contactId)
+    {
+
+        $contactId->email = $request->get("email");
+        $contactId->subject = $request->get("subject");
+        $contactId->message = $request->get("message");
+
+        $contactId->save();
+
+        return redirect("/admin/all-contacts");
+
+    }
+
 }

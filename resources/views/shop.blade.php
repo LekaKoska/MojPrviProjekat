@@ -1,36 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@section("pageTittle")
+            Shop
+        @endsection</title>
+</head>
+<body>
 @extends("layout")
-@section("pageTittle")
-    Shop
-@endsection
-
 @section("pageSection")
-    @foreach($allProducts as $singleProduct)
-    <table class="table">
-        <thead>
-        <tr>
 
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">{{$singleProduct->name}}</th>
-            <td>{{$singleProduct->description}}</td>
-            <td>{{$singleProduct->price}}</td>
-        </tr>
+        <table class="table">
+            <thead>
+            <tr>
 
-        </tbody>
-    </table>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($allProducts as $singleProduct)
+            <tr>
+                <td>{{$singleProduct->name}}</td>
+                <td>{{$singleProduct->description}}</td>
+                <td>{{$singleProduct->price}}</td>
+                <td>
+                    <a class="btn btn-danger" href="{{ route("deleteProduct", ["products" => $singleProduct->id]) }}">Delete</a>
+                    <a class="btn btn-primary" href="{{ route("updateProduct", ["singleProduct" => $singleProduct->id]) }}">Edit</a>
+                </td>
+            </tr>
 
-
-
-
-        @endforeach
-
-
-
+            @endforeach
+            </tbody>
+        </table>
 
 @endsection
+
+</body>
+</html>
+
+
+
+
 
