@@ -1,11 +1,9 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get("/", [\App\Http\Controllers\HomepageController::class, "welcome"]);
-
-
-
 
 Route::get("/contact", [\App\Http\Controllers\contactController::class, "index"]);
 
@@ -43,3 +41,6 @@ Route::get("/admin/contact/edit/{singleContact}",[\App\Http\Controllers\contactC
 
 Route::post("/admin/contact/save/{contactId}", [\App\Http\Controllers\contactController::class, "save"])
     ->name("contact.save");
+
+
+
