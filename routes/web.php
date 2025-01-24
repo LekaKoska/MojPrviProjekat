@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\AdminCheckMiddleware;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,7 +16,10 @@ Route::get("/shop", [\App\Http\Controllers\ShopController::class, "getAllProduct
 
 Route::view("/about", "about");
 
-Route::middleware('auth')->prefix("admin")->group(function ()
+Route::get("/forecast", [\App\Http\Controllers\WeatherController::class, "index"]);
+
+
+Route::middleware(["auth", AdminCheckMiddleware::class])->prefix("admin")->group(function ()
 {
     Route::get("/products", [\App\Http\Controllers\ShopController::class, "viewProducts"]);
 
