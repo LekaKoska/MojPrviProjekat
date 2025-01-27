@@ -6,15 +6,13 @@
     <title>Document</title>
 </head>
 <body>
-        @extends("layout")
+@extends("layout")
 
-    @section("pageSection")
+@section("pageSection")
 
-        @foreach($prognoza as $city => $temperature)
-            <p>{{$city}}</p>
-            <p>{{$temperature}}</p>
-
-        @endforeach
-    @endsection
+    @foreach($forecast as $weather)
+        {{$weather}}
+    @endforeach
+@endsection
 </body>
 </html>

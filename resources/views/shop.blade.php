@@ -11,31 +11,32 @@
 @extends("layout")
 @section("pageSection")
 
-        <table class="table">
-            <thead>
-            <tr>
+    <table class="table">
+        <thead>
+        <tr>
 
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Price</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($allProducts as $singleProduct)
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($allProducts as $singleProduct)
             <tr>
                 <td>{{$singleProduct->name}}</td>
                 <td>{{$singleProduct->description}}</td>
                 <td>{{$singleProduct->price}}</td>
                 <td>
                     <a class="btn btn-danger" href="{{ route("deleteProduct", ["products" => $singleProduct->id]) }}">Delete</a>
-                    <a class="btn btn-primary" href="{{ route("updateProduct", ["singleProduct" => $singleProduct->id]) }}">Edit</a>
+                    <a class="btn btn-primary"
+                       href="{{ route("updateProduct", ["singleProduct" => $singleProduct->id]) }}">Edit</a>
                 </td>
             </tr>
 
-            @endforeach
-            </tbody>
-        </table>
+        @endforeach
+        </tbody>
+    </table>
 
 @endsection
 

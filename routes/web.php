@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ForecastController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AdminCheckMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +17,7 @@ Route::get("/shop", [\App\Http\Controllers\ShopController::class, "getAllProduct
 
 Route::view("/about", "about");
 
-Route::get("/forecast", [\App\Http\Controllers\WeatherController::class, "index"]);
+Route::get("/forecast/{city}", [ForecastController::class, "index"]);
 
 
 Route::middleware(["auth", AdminCheckMiddleware::class])->prefix("admin")->group(function ()

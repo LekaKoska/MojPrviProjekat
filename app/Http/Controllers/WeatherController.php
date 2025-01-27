@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\WeatherModel;
 use Illuminate\Http\Request;
 
 class WeatherController extends Controller
 {
-    public function index()
+    public function index(WeatherModel $city)
     {
-        $prognoza =
-            [
-                'beograd' => 21,
-                'sarajevo' => 23,
-                'novi sad' => 16
-            ];
+        for($i = 0; $i = 5; $i ++)
+        {
+
+        }
 
         return view("weather", compact("prognoza"));
     }

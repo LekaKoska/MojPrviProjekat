@@ -17,6 +17,10 @@ class UserSeeder extends Seeder
     {
         $faker = Factory::create();
 
+        $emailExist = User::where(["email" => $faker->email ]);
+
+
+
         for ($i = 0; $i < 3; $i ++)
         {
             User::create([
