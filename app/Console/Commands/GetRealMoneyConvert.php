@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ExchangeRates;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -26,11 +28,35 @@ class GetRealMoneyConvert extends Command
      */
     public function handle()
     {
-        $url ="https://v6.exchangerate-api.com/v6/".env("MONEY_API_KEY")."/latest/USD";
-        $response = Http::get($url);
 
-    $jsonResponse = $response->json();
-    dd($jsonResponse['conversion_rates']['USD'], $jsonResponse['conversion_rates']['EUR']);
+
+
+
+        foreach (ExchangeRates::AVAILABLE_CURRENCIES as $currency)
+        {
+            $todayCurrency = ExchangeRates::getCurrencyExchanges($currency);
+
+            if($todayCurrency !== null)             //   Ako postoji podatak da nije null znaci da ta valuta sa tim datumom postoji i da je preskocimo
+            {
+                continue;
+            }
+
+            $response = Http::get("https://kurs.resenje.org/api/v1/currencies/$currency/rates/today");
+
+            $jsonResponse = $response->json();
+
+
+            ExchangeRates::create(
+                [
+                    'currency' => $currency,
+                    'value' => $jsonResponse['exchange_middle']
+                ]);
+
+
+        }
+
+
+
 
     }
 

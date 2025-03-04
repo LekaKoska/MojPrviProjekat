@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\ShopModel;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
+
+    private $productRepo;
+
+    public function __construct()
+    {
+        $this->productRepo = new ProductRepository();
+    }
     public function shop()
     {
         $products = [
@@ -51,7 +59,7 @@ class ShopController extends Controller
 
     public function delete($products)
     {
-       $singleProduct = ShopModel::where(['id' => $products])->first();
+       $singleProduct = $this->productRepo->getProductId($products);
        if($singleProduct === null)
        {
            die("This product doesn't exist!");
@@ -69,12 +77,7 @@ class ShopController extends Controller
     public function edit(Request $request, ShopModel $singleProduct)
     {
 
-        $singleProduct->name = $request->get("name");
-        $singleProduct->description = $request->get("description");
-        $singleProduct->amount = $request->get("amount");
-        $singleProduct->price = $request->get("price");
-        $singleProduct->image = $request->get("image");
-        $singleProduct->save();
+      $this->productRepo->editProduct($singleProduct, $request);
 
         return redirect("/shop");
     }

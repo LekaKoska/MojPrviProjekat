@@ -20,7 +20,7 @@ class AdminCheckMiddleware
 
         if($role != "admin")
         {
-            return  redirect("/");
+            return  redirect("/login");
         }
         return $next($request);
     }
