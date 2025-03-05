@@ -13,32 +13,33 @@ Route::view("/about", "about");
 Route::get("/", [HomepageController::class, "welcome"]);
 
 Route::view("/contact", "contact");
-Route::controller(contactController::class)->prefix("/contact")->group(function ()
+Route::controller(contactController::class)->prefix("/contact")->name("contacts.")->group(function ()
 {
     Route::get("/all", "getAllContacts");
     Route::post("/send", "sendContact")
-    ->name("contact.send");
+    ->name("send");
     Route::get("edit/{singleContact}", "update")
-    ->name("contact.single");
+    ->name("single");
     Route::get("/delete/{contacts}","delete")
-        ->name("contact.delete");
+        ->name("delete");
     Route::post("/save/{contactId}", "save")
-    ->name("contact.save");
+    ->name("save");
 });
 
 
-Route::controller(ShopController::class)->prefix("/product")->group(function ()
+Route::controller(ShopController::class)->prefix("/product")->name("products.")->group(function ()
 {
+
     Route::get("/shop", "getAllProducts");
 
     Route::get("/delete/{products}","delete")
-        ->name("product.delete");
+        ->name("delete");
 
     Route::get("/edit/{product}","update")
-        ->name("product.update");
+        ->name("update");
 
     Route::post("/save/{singleProduct}", "edit")
-        ->name("product.save");
+        ->name("save");
 });
 
 
