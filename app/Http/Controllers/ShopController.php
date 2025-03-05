@@ -18,10 +18,9 @@ class ShopController extends Controller
     }
     public function shop()
     {
-        $products = [
-            "iPhone 12", "Samsung A52", "Samsung S24", "iPhone 13 pro max"
-        ];
-        return view("shop", compact('products'));
+        $allProducts = ShopModel::all();
+
+        return view("shop", compact('allProducts'));
     }
     public function getAllProducts()
     {
@@ -36,7 +35,7 @@ class ShopController extends Controller
     {
 
         $this->productRepo->addProduct($request);
-        return redirect("/shop");
+        return redirect("/product/shop");
     }
 
     public function viewProducts()
@@ -68,7 +67,7 @@ class ShopController extends Controller
 
       $this->productRepo->editProduct($singleProduct, $request);
 
-        return redirect("/shop");
+        return redirect("/product/shop");
     }
 
 

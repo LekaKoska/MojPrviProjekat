@@ -16,10 +16,7 @@ class contactController extends Controller
     {
         $this->contactRepo = new ContactRepository();
     }
-    public function index()
-    {
-        return view("contact");
-    }
+
     public function getAllContacts()
     {
         $allContacts = ContactModel::all();
@@ -31,7 +28,7 @@ class contactController extends Controller
 
         $this->contactRepo->createContact($request);
 
-        return redirect("/shop");
+        return redirect("/product/shop");
     }
 
     public function delete($contacts)

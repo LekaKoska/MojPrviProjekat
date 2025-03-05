@@ -10,12 +10,13 @@
         <p>{{$product->name}}</p>
     @endforeach
 
-    <form method="POST" action="/send-contact">
+    <form method="POST" action="{{route("contact.send")}}">
+        {{csrf_field()}}
         @if($errors->any())
             {{$errors->first()}}
         @endif
 
-        @csrf
+
         <div class="form-group col-3">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
