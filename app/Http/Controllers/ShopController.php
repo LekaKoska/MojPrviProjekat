@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddProductRequest;
 use App\Models\ShopModel;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
@@ -31,22 +32,10 @@ class ShopController extends Controller
     {
         return view("addProduct");
     }
-    public function addProduct(Request $request)
+    public function addProduct(AddProductRequest $request)
     {
-        $request->validate([
-           "name" => "required|string|unique:products",
-           "description" => "required|string|min:6",
-           "amount" => "required|integer",
-           "price" => "required|integer",
-           "image" => "required|string"
-        ]);
-        ShopModel::create([
-           "name" => $request->get("name"),
-           "description" => $request->get("description"),
-           "amount" => $request->get("amount"),
-           "price" => $request->get("price"),
-           "image" => $request->get("image")
-        ]);
+
+        $this->productRepo->addProduct($request);
         return redirect("/shop");
     }
 
