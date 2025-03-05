@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactModel;
+use App\Repositories\ContactRepository;
 use Illuminate\Http\Request;
 
 class contactController extends Controller
 {
+
+    private $contactRepo;
+
+    public function __construct()
+    {
+        $this->contactRepo = new ContactRepository();
+    }
     public function index()
     {
         return view("contact");
@@ -25,19 +33,14 @@ class contactController extends Controller
             "description" => "required|min:5"
                ]);
 
-        ContactModel::create([
-           "email" => $request->get("email"),
-           "subject" => $request->get("subject"),
-           "message" => $request->get("description")
-
-        ]);
+        $this->contactRepo->createContact($request);
 
         return redirect("/shop");
     }
 
     public function delete($contacts)
     {
-        $singleContact = ContactModel::where(['id' => $contacts])->first(); // Query for select all and LIMIT on 1
+        $singleContact = $this->contactRepo->getProductId($contacts); // Query for select all and LIMIT on 1
 
         if($singleContact === null)
         {
@@ -58,11 +61,7 @@ class contactController extends Controller
     public function save(Request $request,ContactModel $contactId)
     {
 
-        $contactId->email = $request->get("email");
-        $contactId->subject = $request->get("subject");
-        $contactId->message = $request->get("message");
-
-        $contactId->save();
+        $this->contactRepo->saveContact($request, $contactId);
 
         return redirect("/admin/all-contacts");
 
