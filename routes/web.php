@@ -21,7 +21,7 @@ Route::controller(contactController::class)->prefix("/contact")->group(function 
     Route::get("edit/{singleContact}", "update")
     ->name("contact.single");
     Route::get("/delete/{contacts}","delete")
-        ->name("deleteContact");
+        ->name("contact.delete");
     Route::post("/save/{contactId}", "save")
     ->name("contact.save");
 });
