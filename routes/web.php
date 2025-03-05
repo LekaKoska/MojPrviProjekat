@@ -12,29 +12,32 @@ use Illuminate\Support\Facades\Route;
 Route::view("/about", "about");
 Route::get("/", [HomepageController::class, "welcome"]);
 
-
-Route::controller(contactController::class)->group(function ()
+Route::view("/contact", "contact");
+Route::controller(contactController::class)->prefix("/contact")->group(function ()
 {
-    Route::get("/contact", "index");
-    Route::get("/all-contacts", "getAllContacts");
-    Route::post("/send-contact", "sendContact");
-    Route::get("/contact/edit/{singleContact}", "update")->name("contact.single");
-    Route::post("/contact/save/{contactId}", "save")->name("contact.save");
+    Route::get("/all", "getAllContacts");
+    Route::post("/send", "sendContact")
+    ->name("contact.send");
+    Route::get("edit/{singleContact}", "update")
+    ->name("contact.single");
+    Route::get("/delete/{contacts}","delete")
+        ->name("deleteContact");
+    Route::post("/save/{contactId}", "save")
+    ->name("contact.save");
 });
 
 
-Route::controller(ShopController::class)->group(function ()
+Route::controller(ShopController::class)->prefix("/product")->group(function ()
 {
     Route::get("/shop", "getAllProducts");
-    Route::get("/delete-contact/{contacts}","delete")
-        ->name("deleteContact");
-    Route::get("/delete-product/{products}","delete")
+
+    Route::get("/delete/{products}","delete")
         ->name("deleteProduct");
 
-    Route::get("/product/edit/{product}","update")
+    Route::get("/edit/{product}","update")
         ->name("updateProduct");
 
-    Route::post("/product/save/{singleProduct}", "edit")
+    Route::post("/save/{singleProduct}", "edit")
         ->name("product.save");
 });
 
