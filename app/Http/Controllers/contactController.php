@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendContactRequest;
 use App\Models\ContactModel;
 use App\Repositories\ContactRepository;
 use Illuminate\Http\Request;
@@ -25,13 +26,8 @@ class contactController extends Controller
         return view("allContacts", compact('allContacts'));
     }
 
-    public function sendContact(Request $request)
+    public function sendContact(SendContactRequest $request)
     {
-        $request->validate([
-            "email" => "required|string", // if(!isset($_POST['email'] && is_string($_POST['email'])
-            "subject" => "required|string",
-            "description" => "required|min:5"
-               ]);
 
         $this->contactRepo->createContact($request);
 
