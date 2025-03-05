@@ -32,10 +32,10 @@ Route::controller(ShopController::class)->prefix("/product")->group(function ()
     Route::get("/shop", "getAllProducts");
 
     Route::get("/delete/{products}","delete")
-        ->name("deleteProduct");
+        ->name("product.delete");
 
     Route::get("/edit/{product}","update")
-        ->name("updateProduct");
+        ->name("product.update");
 
     Route::post("/save/{singleProduct}", "edit")
         ->name("product.save");
