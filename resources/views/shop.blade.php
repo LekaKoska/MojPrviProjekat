@@ -28,8 +28,8 @@
                 <td>{{$singleProduct->description}}</td>
                 <td>{{$singleProduct->price}}</td>
                 <td>
-                    <a class="btn btn-danger" href="{{ route("deleteProduct", ["products" => $singleProduct->id]) }}">Delete</a>
-                    <a class="btn btn-primary" href="{{ route("updateProduct", ["product" => $singleProduct->id]) }}">Edit</a>
+                    <a class="btn btn-danger" href="{{ route("products.delete", ["products" => $singleProduct->id]) }}">Delete</a>
+                    <a class="btn btn-primary" href="{{ route("products.update", ["product" => $singleProduct->id]) }}">Edit</a>
                 </td>
             </tr>
 

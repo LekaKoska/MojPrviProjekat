@@ -8,7 +8,7 @@
 <body>
 @extends("layout")
 @section("pageSection")
-    <form action="{{route("product.save", ['singleProduct' => $product->id])}}" method="POST">
+    <form action="{{route("products.save", ['singleProduct' => $product->id])}}" method="POST">
 
         {{csrf_field()}}
 

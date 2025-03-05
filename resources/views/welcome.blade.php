@@ -10,7 +10,7 @@
         <p>{{$product->name}}</p>
     @endforeach
 
-    <form method="POST" action="{{route("contact.send")}}">
+    <form method="POST" action="{{route("contacts.send")}}">
         {{csrf_field()}}
         @if($errors->any())
             {{$errors->first()}}
