@@ -29,4 +29,13 @@ class ProductRepository
 
     }
 
+    public function addProduct($request)
+    {
+        return $this->productModel->create(["name" => $request->get("name"),
+            "description" => $request->get("description"),
+            "amount" => $request->get("amount"),
+            "price" => $request->get("price"),
+            "image" => $request->get("image")]);
+    }
+
 }

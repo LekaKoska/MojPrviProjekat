@@ -20,36 +20,37 @@ Route::get("/shop", [ShopController::class, "getAllProducts"]);
 
 Route::view("/about", "about");
 
+Route::get("/add-product", [ShopController::class, "index"]);
+
+Route::post("/send-product", [ShopController::class, "addProduct"]);
+
+Route::get("/products", [ShopController::class, "viewProducts"]);
+
+Route::get("/all-contacts", [contactController::class, "getAllContacts"]);
 
 
+
+Route::get("/delete-contact/{contacts}", [contactController::class, "delete"])
+    ->name("deleteContact");
+
+Route::get("/delete-product/{products}", [ShopController::class, "delete"])
+    ->name("deleteProduct");
+
+Route::get("/product/edit/{product}", [ShopController::class, "update"])
+    ->name("updateProduct");
+
+Route::post("/product/save/{singleProduct}", [ShopController::class, "edit"])
+    ->name("product.save");
+
+Route::get("/contact/edit/{singleContact}",[contactController::class, "update"])
+    ->name("contact.single");
+
+Route::post("/contact/save/{contactId}", [contactController::class, "save"])
+    ->name("contact.save");
 
 Route::middleware(["auth", AdminCheckMiddleware::class])->prefix("admin")->group(function ()
 {
-    Route::get("/products", [ShopController::class, "viewProducts"]);
 
-    Route::get("/all-contacts", [contactController::class, "getAllContacts"]);
-
-    Route::get("/add-product", [ShopController::class, "index"]);
-
-    Route::post("/send-product", [ShopController::class, "addProduct"]);
-
-    Route::get("/delete-contact/{contacts}", [contactController::class, "delete"])
-        ->name("deleteContact");
-
-    Route::get("/delete-product/{products}", [ShopController::class, "delete"])
-        ->name("deleteProduct");
-
-    Route::get("/product/edit/{product}", [ShopController::class, "update"])
-        ->name("updateProduct");
-
-    Route::post("/product/save/{singleProduct}", [ShopController::class, "edit"])
-        ->name("product.save");
-
-    Route::get("/contact/edit/{singleContact}",[contactController::class, "update"])
-        ->name("contact.single");
-
-    Route::post("/contact/save/{contactId}", [contactController::class, "save"])
-        ->name("contact.save");
 
 
 });

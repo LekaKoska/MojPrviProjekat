@@ -8,7 +8,7 @@
 <body>
 @extends("layout")
 @section("pageSection")
-    <form action="/admin/send-product" method="POST">
+    <form action="/send-product" method="POST">
         @if($errors->any())
             <p class="text-danger">{{$errors->first()}}</p>
         @endif
