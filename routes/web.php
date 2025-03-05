@@ -9,44 +9,36 @@ use App\Http\Middleware\AdminCheckMiddleware;
 use Illuminate\Support\Facades\Route;
 
 
-
+Route::view("/about", "about");
 Route::get("/", [HomepageController::class, "welcome"]);
 
-Route::get("/contact", [contactController::class, "index"]);
 
-Route::post("/send-contact",[contactController::class, "sendContact"]);
-
-Route::get("/shop", [ShopController::class, "getAllProducts"]);
-
-Route::view("/about", "about");
-
-Route::get("/add-product", [ShopController::class, "index"]);
-
-Route::post("/send-product", [ShopController::class, "addProduct"]);
-
-Route::get("/products", [ShopController::class, "viewProducts"]);
-
-Route::get("/all-contacts", [contactController::class, "getAllContacts"]);
+Route::controller(contactController::class)->group(function ()
+{
+    Route::get("/contact", "index");
+    Route::get("/all-contacts", "getAllContacts");
+    Route::post("/send-contact", "sendContact");
+    Route::get("/contact/edit/{singleContact}", "update")->name("contact.single");
+    Route::post("/contact/save/{contactId}", "save")->name("contact.save");
+});
 
 
+Route::controller(ShopController::class)->group(function ()
+{
+    Route::get("/shop", "getAllProducts");
+    Route::get("/delete-contact/{contacts}","delete")
+        ->name("deleteContact");
+    Route::get("/delete-product/{products}","delete")
+        ->name("deleteProduct");
 
-Route::get("/delete-contact/{contacts}", [contactController::class, "delete"])
-    ->name("deleteContact");
+    Route::get("/product/edit/{product}","update")
+        ->name("updateProduct");
 
-Route::get("/delete-product/{products}", [ShopController::class, "delete"])
-    ->name("deleteProduct");
+    Route::post("/product/save/{singleProduct}", "edit")
+        ->name("product.save");
+});
 
-Route::get("/product/edit/{product}", [ShopController::class, "update"])
-    ->name("updateProduct");
 
-Route::post("/product/save/{singleProduct}", [ShopController::class, "edit"])
-    ->name("product.save");
-
-Route::get("/contact/edit/{singleContact}",[contactController::class, "update"])
-    ->name("contact.single");
-
-Route::post("/contact/save/{contactId}", [contactController::class, "save"])
-    ->name("contact.save");
 
 Route::middleware(["auth", AdminCheckMiddleware::class])->prefix("admin")->group(function ()
 {
