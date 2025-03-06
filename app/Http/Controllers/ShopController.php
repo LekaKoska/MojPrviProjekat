@@ -70,6 +70,11 @@ class ShopController extends Controller
         return redirect("/product/shop");
     }
 
+    public function permalink(ShopModel $product)
+    {
+        return view("permalink", compact("product"));
+    }
+
 
 
 

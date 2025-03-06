@@ -30,6 +30,7 @@
                 <td>
                     <a class="btn btn-danger" href="{{ route("products.delete", ["products" => $singleProduct->id]) }}">Delete</a>
                     <a class="btn btn-primary" href="{{ route("products.update", ["product" => $singleProduct->id]) }}">Edit</a>
+                    <a class="btn btn-warning" href="{{route("products.permalink", ["product" => $singleProduct->id])}}">Pogledaj proizvod</a>
                 </td>
             </tr>
 

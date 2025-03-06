@@ -5,6 +5,7 @@ use App\Http\Controllers\contactController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\ShoppingCartController;
 use App\Http\Middleware\AdminCheckMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -26,12 +27,18 @@ Route::controller(contactController::class)->prefix("/contact")->name("contacts.
     ->name("save");
 });
 
+Route::post("/cart/add", [ShoppingCartController::class, "addToCart"])
+    ->name("cart.add");
+
+Route::get("/cart", [ShoppingCartController::class, "showCart"])
+    ->name("cart.view");
 
 Route::controller(ShopController::class)->prefix("/product")->name("products.")->group(function ()
 {
 
     Route::get("/shop", "getAllProducts");
-
+    Route::get("/{product}", "permalink")
+    ->name("permalink");
     Route::get("/delete/{products}","delete")
         ->name("delete");
 
