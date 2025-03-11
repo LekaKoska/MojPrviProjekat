@@ -27,11 +27,11 @@ Route::controller(contactController::class)->prefix("/contact")->name("contacts.
     ->name("save");
 });
 
-Route::post("/cart/add", [ShoppingCartController::class, "addToCart"])
-    ->name("cart.add");
+Route::post("/cart/add", [ShoppingCartController::class, "addToCart"])->name("cart.add");
 
-Route::get("/cart", [ShoppingCartController::class, "showCart"])
-    ->name("cart.view");
+Route::get("/cart", [ShoppingCartController::class, "showCart"])->name("cart.view");
+
+Route::get("/cart/delete", [ShoppingCartController::class, "delete"])->name("cart.delete");
 
 Route::controller(ShopController::class)->prefix("/product")->name("products.")->group(function ()
 {
