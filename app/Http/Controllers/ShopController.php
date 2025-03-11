@@ -72,6 +72,7 @@ class ShopController extends Controller
 
     public function permalink(ShopModel $product)
     {
+
         return view("permalink", compact("product"));
     }
 

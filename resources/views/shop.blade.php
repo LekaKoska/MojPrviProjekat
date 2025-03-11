@@ -18,7 +18,7 @@
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Amount</th>
         </tr>
         </thead>
         <tbody>
@@ -27,6 +27,7 @@
                 <td>{{$singleProduct->name}}</td>
                 <td>{{$singleProduct->description}}</td>
                 <td>{{$singleProduct->price}}</td>
+                <td>{{$singleProduct->amount}}</td>
                 <td>
                     <a class="btn btn-danger" href="{{ route("products.delete", ["products" => $singleProduct->id]) }}">Delete</a>
                     <a class="btn btn-primary" href="{{ route("products.update", ["product" => $singleProduct->id]) }}">Edit</a>

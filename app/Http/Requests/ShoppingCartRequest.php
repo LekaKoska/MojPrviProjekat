@@ -16,8 +16,8 @@ class ShoppingCartRequest extends FormRequest
     public function rules(): array
     {
         return [
-           "id" => "required|exists:products,id",
-           "amount" => "required|min:1"
+            "id" => "required|exists:products,id", // obavezan, mora da postoji u tabeli products taj id
+            "amount" => "required|min:1"
         ];
     }
 }
