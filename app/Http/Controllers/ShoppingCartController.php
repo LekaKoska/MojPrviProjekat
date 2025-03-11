@@ -41,12 +41,30 @@ class ShoppingCartController extends Controller
         }
         $product = ShopModel::whereIn("id", $allProducts)->get();       // Sada nam $allPorducts izgleda ovako = [3,4,8], whereIn sluzi kako bi pronasli sve id-jeve u $allProducts.
 
+        $combined = [];
+
+        foreach (Session::get("products") as $item)
+        {
+            $productId = ShopModel::firstWhere("id", $item['product_id'])->first(); // Pronadji mi proizvod koji ima taj ID
+            if($productId)
+            {
+                $combined[] =
+                    [
+                        'name' => $productId->name,
+                        'amount' => $item['amount'],
+                        'price' => $productId->price,
+                        'total' => $item['amount']*$productId->price
+                    ];
+            }
+        }
 
 
         return view("cart",
             [
                 "cart" => Session::get("products"),
-                "product" => $product
+                "product" => $product,
+                "combined" => $combined
+
             ]);
     }
 

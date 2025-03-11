@@ -1,4 +1,5 @@
- <!doctype html>
+@php use Illuminate\Support\Facades\Session; @endphp
+    <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,12 +7,18 @@
     <title>Document</title>
 </head>
 <body>
-  @foreach($product as $singleProduct)
-      <p>Product: {{$singleProduct->name}}</p>
-      <p>Amount: {{$singleProduct->amount}}</p>
-  @endforeach
+        @foreach($combined as $item)
+        <p>Name: {{$item['name']}}</p>
+        <p>Price: {{$item['price']}}</p>
+        <p>Amount: {{$item['amount']}}</p>
+        <p>Total: {{$item['total']}}</p>
 
-    <a href="{{route("cart.delete")}}">Empty</a>
+
+
+
+@endforeach
+
+<a href="{{route("cart.delete")}}">Empty</a>
 
 </body>
 </html>
