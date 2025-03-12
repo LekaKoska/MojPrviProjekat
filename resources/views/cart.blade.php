@@ -7,18 +7,21 @@
     <title>Document</title>
 </head>
 <body>
+        @if(Session::has("error"))
+            <p>{{Session::get("error")}}</p>
+
+        @endif
         @foreach($combined as $item)
         <p>Name: {{$item['name']}}</p>
         <p>Price: {{$item['price']}}</p>
         <p>Amount: {{$item['amount']}}</p>
         <p>Total: {{$item['total']}}</p>
-
-
-
-
+        <form action="{{route("cart.pay")}}" method="GET">
+            <button>Poruci</button>
+        </form>
 @endforeach
 
-<a href="{{route("cart.delete")}}">Empty</a>
+
 
 </body>
 </html>
