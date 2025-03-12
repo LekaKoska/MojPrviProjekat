@@ -6,15 +6,27 @@ use App\Http\Requests\ShoppingCartRequest;
 use App\Models\OrdersItem;
 use App\Models\OrdersModel;
 use App\Models\ShopModel;
+use App\Repositories\OrderItemsRepository;
+use App\Repositories\OrderRepository;
+use App\Repositories\ShoppingCartRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class ShoppingCartController extends Controller
 {
+    private $ShoppingCartRepo;
+    private $orderRepo;
+    private $orderItemsRepo;
+    public function __construct()
+    {
+        $this->ShoppingCartRepo = new ShoppingCartRepository();
+        $this->orderRepo = new OrderRepository();
+        $this->orderItemsRepo = new OrderItemsRepository();
+    }
     public function addToCart(ShoppingCartRequest $request)
     {
-        $product = ShopModel::where(['id' => $request->id])->first();
+        $product = $this->ShoppingCartRepo->productId($request);
 
         if($product->amount  < $request->amount)
         {
@@ -26,8 +38,6 @@ class ShoppingCartController extends Controller
                 "product_id" => $request->id,
                 "amount" => $request->amount
             ]);
-
-
 
 
        return redirect("/cart");
@@ -54,7 +64,7 @@ class ShoppingCartController extends Controller
 
         foreach (Session::get("products") as $item)
         {
-            $productId = ShopModel::firstWhere("id", $item['product_id'])->first(); // Pronadji mi proizvod koji ima taj ID
+            $productId = $this->ShoppingCartRepo->firstWhereIdProduct($item); // Pronadji mi proizvod koji ima taj ID
             if($productId)
             {
                 $combined[] =
@@ -67,7 +77,6 @@ class ShoppingCartController extends Controller
             }
         }
 
-
         return view("cart",
             [
                 "cart" => Session::get("products"),
@@ -76,8 +85,6 @@ class ShoppingCartController extends Controller
 
             ]);
     }
-
-
 
     public function pay()
     {
@@ -95,29 +102,21 @@ class ShoppingCartController extends Controller
 
         foreach ($cart as $item)         // Predji preko sesije
         {
-            $product = ShopModel::firstWhere(["id" => $item['product_id']])->first(); // Pronadji mi proizvod koji ima taj ID
+            $product = $this->ShoppingCartRepo->firstWhereIdProduct($item); // Pronadji mi proizvod koji ima taj ID
             $totalCartPrice += $item['amount'] * $product->amount; // Nadodaj mi u $totalCartPrice cenu proizvoda
 
         }
 
-        $order = OrdersModel::create([
-            'user_id' => Auth::id(),
-            'price' => $totalCartPrice
-        ]);
+        $order = $this->orderRepo->orderCreate($totalCartPrice);
+
 
         foreach ($cart as $item)         // Predji preko sesije
         {
-            $product = ShopModel::firstWhere(["id" => $item['product_id']])->first();  // Pronadji mi proizvod koji ima taj ID
+            $product = $this->ShoppingCartRepo->firstWhereIdProduct($item);  // Pronadji mi proizvod koji ima taj ID
             $product->amount -= $item['amount'];
             $product->save();
 
-            OrdersItem::create(
-                [
-                    'order_id' => $order->id,
-                    'product_id' => $product->id,
-                    'amount' => $item['amount'],
-                    'price' => $item['amount'] * $product->price
-                ]);
+            $this->orderItemsRepo->createOrderItems($order, $product, $item);
 
         }
 

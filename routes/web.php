@@ -33,6 +33,8 @@ Route::get("/cart", [ShoppingCartController::class, "showCart"])->name("cart.vie
 
 Route::get("/cart/delete", [ShoppingCartController::class, "delete"])->name("cart.delete");
 
+Route::get("/cart/success", [ShoppingCartController::class, "pay"])->name("cart.pay");
+
 Route::controller(ShopController::class)->prefix("/product")->name("products.")->group(function ()
 {
 
